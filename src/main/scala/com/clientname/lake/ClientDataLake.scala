@@ -18,10 +18,7 @@ class ClientDataLake(val localDate: LocalDate) extends Datalake {
     //define functions to calculate the path to your data.
     //separate your data into raw/src, project
 
-    def getPath(folder: String) = {
-      val dateString = localDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd/"))
-      s"s3://${environment.bucketName}/$folder/$dateString/"
-    }
+    def getPath(folder: String) = s"s3://${environment.bucketName}/$folder"
 
     def getRawPath(folder: String) = {
       getPath("raw/" + folder)
@@ -35,22 +32,26 @@ class ClientDataLake(val localDate: LocalDate) extends Datalake {
       getPath("project/" + folder)
     }
 
-    //define all your data sources like this:
-    refs += Raw.InputSourceFirst.inputSourceFirstDataFirst -> new FileSystemDataLink(
-      getRawPath("inputSourceFirst/dataFirst"),
-      Parquet
+    def snapshotDataLinkParquet(path: String) = new SnapshotDataLink(
+      new FileSystemDataLink(getRawPath(path), Parquet),
+      localDate
     )
 
-    refs += Raw.InputSourceFirst.inputSourceFirstDataSecond -> new FileSystemDataLink(
-      getRawPath("inputSourceFirst/dataSecond"),
-      Orc
+    //define all your data sources like this:
+    refs += Raw.InputSourceFirst.inputSourceFirstDataFirst -> snapshotDataLinkParquet("inputSourceFirst/dataFirst")
+
+    refs += Raw.InputSourceFirst.inputSourceFirstDataFirst -> snapshotDataLinkParquet("inputSourceFirst/dataFirst")
+
+    //one does not need to use helper functions
+    refs += Raw.InputSourceFirst.inputSourceFirstDataSecond -> new SnapshotDataLink(
+      new FileSystemDataLink(getRawPath("inputSourceFirst/dataSecond"),Orc),
+      localDate
     )
 
     //output to clean
-    refs += Clean.firstCleanSource -> new FileSystemDataLink(
-      getCleanPath("inputSourceFirst/dataSecond"),
-      Orc,
-      SaveMode.Overwrite
+    refs += Clean.firstCleanSource -> new SnapshotDataLink(
+      new FileSystemDataLink(getCleanPath("inputSourceFirst/dataSecond"),Orc,SaveMode.Overwrite),
+      localDate
     )
 
   }
