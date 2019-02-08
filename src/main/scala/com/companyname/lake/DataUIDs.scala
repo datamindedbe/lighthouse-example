@@ -1,7 +1,7 @@
-package com.clientname.lake
+package com.companyname.lake
 import be.dataminded.lighthouse.datalake.DataUID
 
-object ClientDataUIDs {
+object DataUIDs {
   object Raw {
     object InputSourceFirst {
       val inputSourceFirstDataFirst = DataUID("raw/inputFirst", "dataFirst")

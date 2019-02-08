@@ -1,4 +1,4 @@
-package com.clientname.models
+package com.companyname.models
 
 case class CaseClassOne(
                          name: String,

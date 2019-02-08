@@ -1,6 +1,6 @@
-package com.clientname.lake
+package com.companyname.lake
 
-abstract class ClientEnvironment {
+abstract class CompanyEnvironment {
   //for AWS, use different buckets for test/acc/prod
   val bucketName: String
 
@@ -11,7 +11,7 @@ abstract class ClientEnvironment {
   //add any other fields which needs to depend on environment, e.g. DB connections
 }
 
-class ClientTestEnvironment extends ClientEnvironment {
+class CompanyTestEnvironment extends CompanyEnvironment {
   override  val bucketName: String = "testBucket"
 
   override  val containerName: String = "testContainer"
@@ -19,7 +19,7 @@ class ClientTestEnvironment extends ClientEnvironment {
 
 }
 
-class ClientProdEnvironment extends ClientEnvironment {
+class CompanyProdEnvironment extends CompanyEnvironment {
   override  val bucketName: String = "prodBucket"
 
   override  val containerName: String = "prodContainer"
