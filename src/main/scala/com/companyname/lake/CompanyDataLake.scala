@@ -1,7 +1,6 @@
 package com.clientname.lake
 
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 import be.dataminded.lighthouse.datalake._
 import be.dataminded.lighthouse.spark._

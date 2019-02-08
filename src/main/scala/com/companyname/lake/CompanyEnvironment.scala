@@ -4,7 +4,7 @@ abstract class ClientEnvironment {
   //for AWS, use different buckets for test/acc/prod
   val bucketName: String
 
-  //for Azure, use different buckets for test/acc/prod
+  //for Azure, use different containers and/or storage accounts for test/acc/prod
   val containerName: String
   val storageAccount: String
 
