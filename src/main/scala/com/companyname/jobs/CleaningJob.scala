@@ -1,28 +1,26 @@
 package com.companyname.jobs
 import be.dataminded.lighthouse.config.{LighthouseConfiguration, LighthouseConfigurationParser}
 import be.dataminded.lighthouse.spark.SparkApplication
-import com.companyname.lake.CompanyDataLake
-import com.companyname.lake.DataUIDs._
+import com.companyname.lake.TypedCompanyDataLake
 
 object CleaningJob extends SparkApplication {
   val parser = new LighthouseConfigurationParser()
 
   parser.parse(args, LighthouseConfiguration()) match {
-    case Some(config) => process(new CompanyDataLake(config.localDate))
+    case Some(config) => process(TypedCompanyDataLake(config))
     case None => System.exit(1)
   }
 
 
-  def process(lake: CompanyDataLake) = {
-    //process all your raw data like this
+  def process(lake: TypedCompanyDataLake) = {
+    //read in your clean data, produce some project data
+    val first = lake.raw.firstData.readTyped()
 
-    val data = lake.getDataLink(Raw.InputSourceFirst.inputSourceFirstDataFirst).read()
+    val second = lake.raw.secondData.readTyped()
 
-    //clean the data
-    //adjust column types, set null values etc
+    //do the transformations
 
-    lake(Clean.firstCleanSource).write(data)
-
+    lake.clean.firstCleanSource.writeTyped(second)
   }
 
 }

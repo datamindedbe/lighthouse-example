@@ -5,7 +5,7 @@ version := "0.1"
 scalaVersion := "2.11.12"
 
 val sparkVersion = "2.3.1"
-val lighthouseVersion = "0.2.6" 
+val lighthouseVersion = "0.2.6-2-g4515dbf"
 
 val sparkCore = "org.apache.spark" %% "spark-core"  % sparkVersion % Provided
 val sparkSql  = "org.apache.spark" %% "spark-sql"   % sparkVersion % Provided

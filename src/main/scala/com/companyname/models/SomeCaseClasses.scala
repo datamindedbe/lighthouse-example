@@ -5,4 +5,7 @@ case class CaseClassOne(
                          address: String
                        )
 
-
+case class CaseClassTwo(
+                         field1: String,
+                         field2: String
+                       )
