@@ -33,15 +33,15 @@ class TypedCompanyDataLake(
 
   object clean {
 
-    val firstCleanSource: TypedDataLink[CaseClassTwo] =
-      link[CaseClassTwo](getPath("clean/cleanSource"))
+    val firstCleanSource: TypedDataLink[CaseClassOneCleaned] =
+      link[CaseClassOneCleaned](getPath("clean/cleanSource"))
 
   }
 
   object project {
 
-    val firstProjectData: TypedDataLink[CaseClassTwo] =
-      link[CaseClassTwo](getPath("project/projectFirst"))
+    val firstProjectData: TypedDataLink[ProjectCaseClassOne] =
+      link[ProjectCaseClassOne](getPath("project/projectFirst"))
   }
 
 }
